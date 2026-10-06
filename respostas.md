@@ -76,13 +76,31 @@ Não publiquei a 3306 para o banco não ficar exposto no meu computador e na red
 na mesma rede interna do compose, precisa falar com ele. Para consultar o banco sem publicar a porta,
 entro no container do `db`:
 
+```
+docker compose exec db mariadb -u root -p
+```
+
+Ele pede a senha de root (a `MARIADB_ROOT_PASSWORD` do meu `.env`).
+
 ## Parte 5 · Persistência
 
 9. Quais comandos você usou para derrubar e subir a stack? Qual comando teria apagado o post que você criou,
    e por quê?
 
+Para derrubar e subir a stack usei:
+
+```
+docker compose down
+docker compose up -d
+```
+
+O `down` remove os containers e a rede, mas mantém os volumes nomeados, onde ficam o banco (`db_data`)
+e os arquivos do WordPress (`wp_data`). Por isso, depois do `up -d`, o post continuou lá. O comando que
+teria apagado o post é `docker compose down -v`, porque a opção `-v` também remove os volumes, e com
+eles somem os dados do banco onde o post estava guardado.
+
 10. Código de conclusão impresso pelo verificador:
 
 ```
-(cole aqui)
+AGROVALE-26128470-E64FE916
 ```
