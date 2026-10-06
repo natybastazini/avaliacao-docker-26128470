@@ -26,14 +26,14 @@ O Nginx serve os arquivos da pasta `/usr/share/nginx/html`. Por isso o meu Docke
 docker exec teste-portal ls /usr/share/nginx/html
 ```
 
-A saída listou `50x.html`, `estilo.css` e `index.html`. No navegador
+A saída listou `50x.html` (página de erro padrão da imagem), `estilo.css` e `index.html`. No navegador
 apareceu o meu nome e a minha matrícula no rodapé, em vez da página "Welcome to nginx!".
 
 ## Parte 2 · Docker Hub
 
 3. Nome completo da imagem publicada e link público do repositório no Docker Hub.
 
-natybastazini/agrovale-portal:1.0-26128470
+A imagem publicada é `natybastazini/agrovale-portal:1.0-26128470`. O repositório público está em
 https://hub.docker.com/r/natybastazini/agrovale-portal
 
 4. Por que o `docker login` foi feito com um token de acesso e não com a senha da conta?
@@ -51,11 +51,14 @@ seria a escolha mais prudente.
 
 | # | Instrução | O que estava errado | O que você viu acontecer | Como corrigiu |
 |---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 1 | falta de `COPY` | O Dockerfile só tinha `FROM` e `WORKDIR`: a pasta `site/` com a página de manutenção nunca era copiada para dentro da imagem. | O build funcionou e o container ficou `Up`, sem erro no `docker logs`, mas em http://localhost:7070 apareceu a página padrão "Welcome to nginx!" em vez do "Voltamos em breve". | Adicionei `COPY site/ /usr/share/nginx/html/`, refiz o build e o run, e a página "Voltamos em breve" apareceu com o container ainda `Up`. |
 
 6. Qual a diferença entre `-p 7042:80` e `-p 80:7042` no `docker run`? Qual dos dois números é a porta do container?
+
+O formato é `-p PORTA_DO_HOST:PORTA_DO_CONTAINER`. Em `-p 7042:80`, a porta 7042 do meu computador
+aponta para a porta 80 dentro do container, que é onde o Nginx escuta. Em `-p 80:7042` seria o
+contrário: a porta 80 do meu computador apontaria para a 7042 do container, onde o Nginx não está
+escutando, e a página não abriria. A porta do container é o número depois dos dois pontos.
 
 ## Parte 4 · docker-compose.yml
 
