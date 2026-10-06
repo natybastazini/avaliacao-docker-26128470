@@ -26,14 +26,24 @@ O Nginx serve os arquivos da pasta `/usr/share/nginx/html`. Por isso o meu Docke
 docker exec teste-portal ls /usr/share/nginx/html
 ```
 
-A saída listou `50x.html` (página de erro padrão da imagem), `estilo.css` e `index.html`. No navegador
+A saída listou `50x.html`, `estilo.css` e `index.html`. No navegador
 apareceu o meu nome e a minha matrícula no rodapé, em vez da página "Welcome to nginx!".
 
 ## Parte 2 · Docker Hub
 
 3. Nome completo da imagem publicada e link público do repositório no Docker Hub.
 
+natybastazini/agrovale-portal:1.0-26128470
+https://hub.docker.com/r/natybastazini/agrovale-portal
+
 4. Por que o `docker login` foi feito com um token de acesso e não com a senha da conta?
+
+No meu caso o login foi feito com a senha da conta, e deu `Login Succeeded`. Mesmo assim, o próprio
+Docker avisa no terminal que um token de acesso (PAT) pode ser usado no lugar, e o token é a opção
+mais segura: dá para limitar as permissões (só leitura ou leitura e escrita), definir uma validade e
+revogar o token sem precisar trocar a senha da conta. Se a senha vazar, o atacante tem acesso a toda
+a conta; se um token vazar, basta apagá-lo. Em um computador de laboratório compartilhado, o token
+seria a escolha mais prudente.
 
 ## Parte 3 · Página de manutenção
 
