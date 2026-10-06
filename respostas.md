@@ -1,9 +1,9 @@
 # Respostas · Avaliação Prática de Docker · Cooperativa AgroVale (Turma A)
 
-Nome:
-Matrícula:
-Usuário do GitHub:
-Usuário do Docker Hub:
+Nome: Natália Bastazini
+Matrícula: 26128470
+Usuário do GitHub: natybastazini
+Usuário do Docker Hub: natybastazini
 
 Responda com as suas palavras e com o que aconteceu na SUA máquina. Resposta curta e certa vale mais
 do que texto longo copiado. Resposta que contradiz o seu próprio Dockerfile ou compose vale zero.
@@ -12,8 +12,22 @@ do que texto longo copiado. Resposta que contradiz o seu próprio Dockerfile ou 
 
 1. Qual imagem base você usou e qual o tamanho final da imagem do portal (saída de `docker images`)?
 
+Usei a imagem oficial `nginx:1.27-alpine`, com tag fixa, porque `latest` não é aceita e a versão alpine
+é bem mais leve. Na saída do `docker images`, a imagem `natybastazini/agrovale-portal:1.0-26128470`
+ficou com 73.6MB.
+
 2. Em qual pasta do container o Nginx procura os arquivos do site? Mostre o comando que você usou para
    conferir que o `index.html` está lá dentro.
+
+O Nginx serve os arquivos da pasta `/usr/share/nginx/html`. Por isso o meu Dockerfile tem
+`COPY html/ /usr/share/nginx/html/`. Para conferir que o `index.html` estava lá dentro, usei:
+
+```
+docker exec teste-portal ls /usr/share/nginx/html
+```
+
+A saída listou `50x.html` (página de erro padrão da imagem), `estilo.css` e `index.html`. No navegador
+apareceu o meu nome e a minha matrícula no rodapé, em vez da página "Welcome to nginx!".
 
 ## Parte 2 · Docker Hub
 
