@@ -64,8 +64,17 @@ escutando, e a página não abriria. A porta do container é o número depois do
 
 7. No serviço `blog`, por que `WORDPRESS_DB_HOST` recebe `db` e não `localhost`?
 
+Cada container tem a sua própria rede interna, então `localhost` dentro do container do blog aponta
+para o próprio blog, onde não existe banco nenhum. Como o blog e o banco estão na mesma rede do
+compose, o Docker resolve o nome do serviço `db` para o IP do container do MariaDB. Por isso o host
+do banco é `db`.
+
 8. Por que o serviço `db` não publica a porta 3306? Se precisar consultar o banco, como faz sem publicar
    a porta? Mostre o comando.
+
+Não publiquei a 3306 para o banco não ficar exposto no meu computador e na rede: só o blog, que está
+na mesma rede interna do compose, precisa falar com ele. Para consultar o banco sem publicar a porta,
+entro no container do `db`:
 
 ## Parte 5 · Persistência
 
